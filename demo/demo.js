@@ -1,10 +1,11 @@
 var Chain = require("../index.js");
 
-var names = require("./massachusetts.json").names;
+var demo = "england"; // "england", "massachusetts"
+var words = require("./" + demo + ".json").names;
 
 var chain = new Chain(3);
 
-chain.push(names);
+chain.push(words);
 
 for (var i = 0; i < 100; i++) {
   var name = chain.generate();
