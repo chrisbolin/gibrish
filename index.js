@@ -54,12 +54,14 @@ Chain.prototype.generate = function() {
     var tail = word.substr(word.length - this.order, this.order);
     var next = this.db.sample(tail);
     if (next === this.ender || !next) {
+      if (word[word.length - 1] === this.ender) {
+        return word.slice(0, word.length - 1);
+      }
       return word;
     } else {
       word = word + next;
     }
   }
-  return word;
 };
 
 module.exports = Chain;
