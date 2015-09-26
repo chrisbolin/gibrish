@@ -18,18 +18,22 @@ DB.prototype.sample = function(key) {
   return _.sample(this.store[key]);
 };
 
-var Chain = function(order){
-  this.order = order;
+var Chain = function(options){
   this.db = new DB();
   this.list = [];
   this.starter = "^";
   this.ender = "$";
-  this.options = {
+
+  // default options
+  this.options = _.extend({
     novel: true,
-  };
+    maxTries: 10,
+    order: 3,
+  }, options);
 };
 
 Chain.prototype.push = function(words) {
+  var order = this.options.order;
   if (typeof words === "string") {
     words = [words];
   }
@@ -39,20 +43,20 @@ Chain.prototype.push = function(words) {
     word = word + "$";
 
     // add inital
-    this.db.add(this.starter, word.substr(0, this.order));
+    this.db.add(this.starter, word.substr(0, order));
 
     // add subsequent
     var length = word.length;
-    for (var j = 0; j <= length - this.order - 1; j++) {
-      var key = word.substr(j, this.order);
-      var value = word[j + this.order];
+    for (var j = 0; j <= length - order - 1; j++) {
+      var key = word.substr(j, order);
+      var value = word[j + order];
       this.db.add(key, value);
     }
   }
 };
 
-Chain.prototype.check = function(word) {
-  if (this.options.novel) {
+Chain.prototype.check = function(word, options) {
+  if (options.novel) {
     if (this.list.indexOf(word) >= 0) {
       return false;
     }
@@ -60,14 +64,22 @@ Chain.prototype.check = function(word) {
   return true;
 };
 
-Chain.prototype.generate = function() {
+Chain.prototype.generate = function(options, depth) {
+  // use global options.order; generate options.order is irrelevant
+  var order = this.options.order;
+  options = _.extend(this.options, options);
+  depth = depth || 0;
+  if (depth > this.options.maxTries) {
+    return null;
+  }
+
   var word = this.db.sample(this.starter);
   for (var i = 100; i >= 0; i--) {
-    var tail = word.substr(word.length - this.order, this.order);
+    var tail = word.substr(word.length - order, order);
     var next = this.db.sample(tail);
     if (next === this.ender || !next) {
       if (word[word.length - 1] === this.ender) {
-        return word.slice(0, word.length - 1);
+        word = word.slice(0, word.length - 1);
       }
       break;
     } else {
@@ -75,10 +87,10 @@ Chain.prototype.generate = function() {
     }
   }
 
-  if (this.check(word)) {
+  if (this.check(word, options)) {
     return word;
   } else {
-    return this.generate();
+    return this.generate(null, depth + 1);
   }
 };
 
