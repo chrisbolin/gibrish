@@ -1,4 +1,6 @@
-var _ = require('lodash');
+"use strict";
+
+var _ = require("lodash");
 
 var DB = function(){};
 
@@ -7,7 +9,7 @@ DB.prototype.add = function(key, value) {
     this[key].push(value);
   } else {
     this[key] = [value];
-  }  
+  }
 };
 
 DB.prototype.sample = function(key) {
@@ -18,18 +20,18 @@ var Chain = function(order){
   this.order = order;
   this.db = new DB();
   this.list = [];
-  this.starter = '^';
-  this.ender = '$';
+  this.starter = "^";
+  this.ender = "$";
 };
 
 Chain.prototype.push = function(words) {
-  if (typeof words === 'string') {
+  if (typeof words === "string") {
     words = [words];
   }
   for (var i = words.length - 1; i >= 0; i--) {
     var word = words[i];
     this.list.push(word);
-    word = word + '$';
+    word = word + "$";
 
     // add inital
     this.db.add(this.starter, word.substr(0, this.order));
@@ -41,7 +43,7 @@ Chain.prototype.push = function(words) {
       var value = word[j + this.order];
       this.db.add(key, value);
     }
-  };
+  }
 };
 
 Chain.prototype.generate = function() {

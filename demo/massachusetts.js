@@ -1,6 +1,6 @@
-var Chain = require('../index.js');
+var Chain = require("../index.js");
 
-var names = require('./massachusetts.json').names;
+var names = require("./massachusetts.json").names;
 
 var chain = new Chain(3);
 

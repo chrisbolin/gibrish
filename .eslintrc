@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "no-undef": 0, // node uses this with require and module.exports
+    "comma-dangle": 0, // useful to delineate between if{} and {}
+    "no-console": 0, // demoing
+    "global-strict": 0 // use strict, but at the top of files
+  }
+}
