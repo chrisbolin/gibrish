@@ -24,6 +24,9 @@ var Chain = function(order){
   this.list = [];
   this.starter = "^";
   this.ender = "$";
+  this.options = {
+    novel: true,
+  };
 };
 
 Chain.prototype.push = function(words) {
@@ -48,6 +51,15 @@ Chain.prototype.push = function(words) {
   }
 };
 
+Chain.prototype.check = function(word) {
+  if (this.options.novel) {
+    if (this.list.indexOf(word) >= 0) {
+      return false;
+    }
+  }
+  return true;
+};
+
 Chain.prototype.generate = function() {
   var word = this.db.sample(this.starter);
   for (var i = 100; i >= 0; i--) {
@@ -57,10 +69,16 @@ Chain.prototype.generate = function() {
       if (word[word.length - 1] === this.ender) {
         return word.slice(0, word.length - 1);
       }
-      return word;
+      break;
     } else {
       word = word + next;
     }
+  }
+
+  if (this.check(word)) {
+    return word;
+  } else {
+    return this.generate();
   }
 };
 
