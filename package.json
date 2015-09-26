@@ -1,0 +1,14 @@
+{
+  "name": "gibberish.js",
+  "version": "1.0.0",
+  "description": "Gibberish word generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chris Bolin",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^3.10.1"
+  }
+}
