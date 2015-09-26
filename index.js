@@ -2,18 +2,20 @@
 
 var _ = require("lodash");
 
-var DB = function(){};
+var DB = function(){
+  this.store = {};
+};
 
 DB.prototype.add = function(key, value) {
-  if (this[key]) {
-    this[key].push(value);
+  if (this.store.hasOwnProperty(key)) {
+    this.store[key].push(value);
   } else {
-    this[key] = [value];
+    this.store[key] = [value];
   }
 };
 
 DB.prototype.sample = function(key) {
-  return _.sample(this[key]);
+  return _.sample(this.store[key]);
 };
 
 var Chain = function(order){
