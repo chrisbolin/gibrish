@@ -1,6 +1,22 @@
 "use strict";
 
-var _ = require("lodash");
+var utils = {
+  sample: function(array) {
+    return array[
+      Math.floor(Math.random() * array.length)
+    ];
+  },
+  extend: function(a, b) {
+    if (typeof b === "object") {
+      for (var key in b) {
+        if (b.hasOwnProperty(key)) {
+          a[key] = b[key];
+        }
+      }
+    }
+    return a;
+  },
+};
 
 var DB = function(){
   this.store = {};
@@ -15,7 +31,7 @@ DB.prototype.add = function(key, value) {
 };
 
 DB.prototype.sample = function(key) {
-  return _.sample(this.store[key]);
+  return utils.sample(this.store[key]);
 };
 
 var Chain = function(options){
@@ -25,7 +41,7 @@ var Chain = function(options){
   this.ender = "$";
 
   // default options
-  this.options = _.extend({
+  this.options = utils.extend({
     novel: true,
     maxTries: 10,
     order: 3,
@@ -67,7 +83,7 @@ Chain.prototype.check = function(word, options) {
 Chain.prototype.generate = function(options, depth) {
   // use global options.order; generate options.order is irrelevant
   var order = this.options.order;
-  options = _.extend(this.options, options);
+  options = utils.extend(this.options, options);
   depth = depth || 0;
   if (depth > this.options.maxTries) {
     return null;
