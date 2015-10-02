@@ -1,13 +1,12 @@
-var Chain = require("../index.js");
+var Gibberish = require("../index.js");
 
 var demo = "massachusetts"; // "england", "massachusetts"
-var words = require("./" + demo + ".json").names;
+var towns = require("./" + demo + ".json").names;
 
-var chain = new Chain();
+var gibberish = new Gibberish();
 
-chain.push(words);
+gibberish.push(towns);
 
-for (var i = 0; i < 100; i++) {
-  var name = chain.generate();
-  console.log(name);
+for (var i = 0; i < 10; i++) {
+  console.log(gibberish.generate());
 }
