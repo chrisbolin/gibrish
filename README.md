@@ -1,34 +1,20 @@
-# gibberish.js
+# gibrish
 
-Generate some fake words.
+Gibrish generates fake words from real words.
 
 ```javascript
-var Gibberish = require("gibberish");
+var Gibrish = require("gibrish");
+var g = new Gibrish();
 
-// towns in Massachusetts
-// en.wikipedia.org/wiki/List_of_municipalities_in_Massachusetts
-var towns = [
-  "Abington",
-  "Acton",
-  ...
-  "Wrentham",
-  "Yarmouth"
-];
+g.push(massachusettsTowns);
+// massachusettsTowns = ["Abington", "Acton", ... ]
 
-var gibberish = new Gibberish();
-gibberish.push(towns);
-
-for (var i = 0; i < 10; i++) {
-  console.log(gibberish.generate());
-}
-"Brainfield"
-"Wester"
-"Pittleborough"
-"East Barnster"
-"Tewksburn"
-"Hansfield"
-"Southam"
-"Brewster-by-the-Sea"
-"Arling"
-"Linchester"
+g.generate();
+  "Brainfield"
+g.generate();
+  "Pittleborough"
+g.generate();
+  "East Barnster"
+g.generate();
+  "Brewster-by-the-Sea"
 ```
