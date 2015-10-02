@@ -55,6 +55,10 @@ Chain.prototype.push = function(words) {
   }
   for (var i = words.length - 1; i >= 0; i--) {
     var word = words[i];
+    if (word.length < order) {
+      continue;
+    }
+
     this.list.push(word);
     word = word + "$";
 
