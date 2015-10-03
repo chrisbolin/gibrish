@@ -1,12 +1,12 @@
-var Gibberish = require("../index.js");
+var Gibrish = require("../index.js");
 
 var demo = "massachusetts"; // "england", "massachusetts"
 var towns = require("./" + demo + ".json").names;
 
-var gibberish = new Gibberish();
+var gibrish = new Gibrish();
 
-gibberish.push(towns);
+gibrish.push(towns);
 
 for (var i = 0; i < 10; i++) {
-  console.log(gibberish.generate());
+  console.log(gibrish.generate());
 }
